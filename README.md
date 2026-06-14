@@ -33,6 +33,59 @@ This project achieves its living, emotional intelligence by perfectly orchestrat
 
 ---
 
+## 🧠 AI Flow & System Architecture
+
+Our platform acts as a unified pipeline where human memories are gathered, processed, and transformed into a conversational, immortalized intelligence. 
+
+```mermaid
+graph TD
+    %% Styling
+    classDef user fill:#FFEBEB,stroke:#FFB6C1,stroke-width:2px,color:#000;
+    classDef frontend fill:#E6F7FF,stroke:#91D5FF,stroke-width:2px,color:#000;
+    classDef ai fill:#F6FFED,stroke:#B7EB8F,stroke-width:2px,color:#000;
+    classDef database fill:#FFF7E6,stroke:#FFD591,stroke-width:2px,color:#000;
+    
+    User((👤 Patient / Family)):::user
+
+    subgraph "Frontend Engine (React/Vite)"
+        DearMe[📔 Dear Me Platform]:::frontend
+    end
+
+    subgraph "Data Storage layer"
+        Supabase[(Supabase Backend)]:::database
+        Obsidian(Markdown Vault Generation):::database
+    end
+
+    subgraph "AI Processing Layer"
+        Eleven[🎙️ ElevenLabs STT]:::ai
+        Sarvam[🌍 Sarvam AI]:::ai
+        Gemini[✨ Gemini 1.5 Flash]:::ai
+    end
+
+    %% Data Flow
+    User <-->|Inputs Memories & Chats| DearMe
+    
+    DearMe -->|Voice Memos| Eleven
+    Eleven -.->|Returns Transcripts| DearMe
+    
+    DearMe -->|Native Text| Sarvam
+    Sarvam -.->|Returns English| DearMe
+    
+    DearMe -->|Saves Structured Text| Supabase
+    Supabase -->|Compiles Data| Obsidian
+    
+    Obsidian -->|System Instruction Inject| Gemini
+    DearMe <-->|Conversational Interface| Gemini
+```
+
+### The Data Journey
+1. **Intake & Translation:** The user records an audio clip or writes in their native language. **ElevenLabs** instantly transcribes the audio, and **Sarvam AI** translates regional languages into English.
+2. **Storage:** The processed text is securely saved to our **Supabase** backend. 
+3. **Vault Generation:** The platform pulls down every single memory from Supabase and compiles it into a structured Markdown file (acting as our Obsidian Vault).
+4. **Resurrection:** When the user enters the "Synthetic Mind Chat," the entire Obsidian Vault is seamlessly injected into the **Gemini API** as a master `systemInstruction`, completely altering the AI's persona to become the living embodiment of the patient's memories.
+
+---
+
 ## 🌟 Comprehensive Feature Breakdown
 
 This application features a global **"My Wisdom"** dashboard that acts as the entry point to **9 completely distinct diary sections**. Each section is tailored specific to the type of memory it holds, complete with unique CSS styling, animations, and custom fields.
