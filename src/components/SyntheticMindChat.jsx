@@ -57,7 +57,7 @@ export default function SyntheticMindChat() {
       <div className="section-header" style={{ marginBottom: 20 }}>
         <span className="section-header__emoji">🧠</span>
         <h2 className="section-header__title" style={{ fontFamily: 'var(--font-script)' }}>Synthetic Mind</h2>
-        <p className="section-header__subtitle">powered by Gemini & your Obsidian vault</p>
+        <p className="section-header__subtitle">powered by OpenRouter & your Obsidian vault</p>
       </div>
 
       <div className="chat-container">
