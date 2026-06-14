@@ -1,10 +1,25 @@
-# 📔 Dear Me ✨
+# 📔 Dear Me: The Synthetic Memory Engine ✨
 
-*My little world of memories*
+## The Need for a Synthetic Brain
 
-**Dear Me** is a highly interactive, digital emotional diary and memory scrapbook. Built to evoke the comforting nostalgia of a secret childhood journal, it replaces generic note-taking with a heavily themed, emotionally intelligent space. The application captures the feeling of writing with glitter pens on textured paper, using washi tape to stick polaroids, and locking your secrets away.
+> *We are losing lifetimes of wisdom because memory degrades faster than it can be communicated.*
 
-From particle animations to specialized data tracking for different emotional states, every single feature has been designed to make documenting your journey a magical experience.
+When a patient enters the later stages of cognitive decline, standard medical care focuses on physical safety — but emotional and cognitive safety are left vulnerable.
+
+### 💭 Cognitive Isolation
+Patients need a gentle, patient, and infinite sounding board.
+
+### 📚 Fragmented History
+Photos, videos, and journals are scattered across devices — impossible to navigate alone.
+
+### ❤️ Our Mission
+**Build a living Synthetic Memory Engine — an Obsidian vault you can talk to through the Dear Me website, growing wiser with every conversation.**
+
+---
+
+**Dear Me** serves as the beautiful, highly interactive frontend for your Synthetic Brain. Built to evoke the comforting nostalgia of a secret childhood journal, it replaces generic note-taking with a heavily themed, emotionally intelligent space. 
+
+From particle animations to specialized data tracking, every feature has been designed to make documenting your journey a magical experience while securely feeding your Synthetic Memory Engine.
 
 ---
 
