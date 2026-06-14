@@ -1,0 +1,422 @@
+/* ============================================
+   ABOUT ME COMPONENT STYLES
+   ============================================ */
+
+.aboutme-page {
+  padding-bottom: 40px;
+}
+
+.aboutme-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* --- ACCORDION CARD --- */
+.aboutme-card {
+  background: var(--paper-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 15px var(--shadow-soft);
+  overflow: hidden;
+  transition: all var(--ease-smooth) 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.aboutme-card:hover {
+  box-shadow: 0 8px 25px var(--shadow-medium);
+}
+
+.aboutme-card__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.aboutme-card__title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.aboutme-card__icon {
+  font-size: 1.5rem;
+}
+
+.aboutme-card__title h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.aboutme-card__chevron {
+  color: var(--text-light);
+  transition: transform var(--ease-smooth) 0.3s;
+}
+
+.aboutme-card.is-open .aboutme-card__chevron {
+  transform: rotate(180deg);
+}
+
+.aboutme-card__content-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--ease-smooth) 0.4s;
+}
+
+.aboutme-card.is-open .aboutme-card__content-wrapper {
+  grid-template-rows: 1fr;
+}
+
+.aboutme-card__content {
+  overflow: hidden;
+  padding: 0 24px;
+}
+
+/* Needs extra padding bottom inside the grid item so it collapses cleanly */
+.aboutme-card.is-open .aboutme-card__content {
+  padding-bottom: 24px;
+}
+
+
+/* --- PHOTO UPLOAD --- */
+.aboutme-photo-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.aboutme-photo-upload {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-full);
+  border: 2px dashed var(--pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  background: var(--pink-light);
+  transition: all var(--ease-smooth) 0.2s;
+}
+
+.aboutme-photo-upload:hover {
+  border-style: solid;
+  transform: scale(1.05);
+}
+
+.aboutme-photo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.aboutme-photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--pink-dark);
+}
+
+
+/* --- PERSONALITY CHIPS --- */
+.aboutme-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.aboutme-chip {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--pink-light);
+  background: white;
+  color: var(--text-medium);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--ease-bounce) 0.3s;
+}
+
+.aboutme-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px var(--shadow-soft);
+}
+
+.aboutme-chip.active {
+  background: var(--pink);
+  color: white;
+  border-color: var(--pink);
+  box-shadow: 0 4px 12px rgba(248, 180, 200, 0.4);
+}
+
+
+/* --- SORTABLE LIST (VALUES) --- */
+.aboutme-helper-text {
+  color: var(--text-medium);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.aboutme-sortable-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.aboutme-sortable-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: white;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--mint-light);
+  cursor: grab;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.aboutme-sortable-item:active {
+  cursor: grabbing;
+}
+
+.aboutme-sortable-item.dragging {
+  background: var(--mint-light);
+  box-shadow: 0 8px 20px var(--shadow-medium);
+  transform: scale(1.02);
+}
+
+.aboutme-rank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--mint);
+  color: var(--text-dark);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.aboutme-value-text {
+  flex-grow: 1;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.aboutme-drag-handle {
+  color: var(--text-light);
+  font-size: 1.2rem;
+  cursor: grab;
+}
+
+
+/* --- CHECKBOX GROUP (CARE PROTOCOL) --- */
+.aboutme-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.aboutme-checkbox-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: white;
+  border: 1px solid var(--lavender-light);
+  cursor: pointer;
+  transition: all var(--ease-smooth) 0.2s;
+}
+
+.aboutme-checkbox-item:hover {
+  background: var(--lavender-light);
+}
+
+.aboutme-checkbox-item.checked {
+  border-color: var(--lavender);
+  background: rgba(200, 182, 255, 0.1);
+}
+
+.aboutme-checkbox-box {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border-radius: 6px;
+  border: 2px solid var(--lavender);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  background: white;
+  transition: all 0.2s;
+  margin-top: 2px;
+}
+
+.aboutme-checkbox-item.checked .aboutme-checkbox-box {
+  background: var(--lavender);
+}
+
+.aboutme-checkbox-item span {
+  color: var(--text-dark);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+
+/* --- VOICE PREVIEW --- */
+.aboutme-voice-preview {
+  margin-top: 32px;
+  padding: 24px;
+  background: var(--paper-bg);
+  border-radius: var(--radius-md);
+  position: relative;
+  box-shadow: 0 4px 15px var(--shadow-soft);
+}
+
+.aboutme-voice-preview::before {
+  content: '"';
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-family: var(--font-script);
+  font-size: 4rem;
+  color: var(--pink-light);
+  line-height: 1;
+}
+
+.aboutme-voice-preview-title {
+  font-family: var(--font-body);
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.aboutme-voice-preview-text {
+  font-family: var(--font-handwritten);
+  font-size: 1.8rem;
+  color: var(--text-dark);
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
+}
+
+.aboutme-voice-preview-text p {
+  margin-bottom: 12px;
+}
+
+.aboutme-voice-preview-text p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* --- SAVE TOAST --- */
+.aboutme-toast {
+  position: fixed;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-dark);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transition: bottom var(--ease-spring) 0.5s;
+  z-index: var(--z-toast);
+}
+
+.aboutme-toast.show {
+  bottom: 30px;
+}
+
+
+/* --- DARK MODE OVERRIDES --- */
+[data-theme="dark"] .aboutme-card {
+  background: #1e1b29;
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .aboutme-card__title h3 {
+  color: #fff;
+}
+
+[data-theme="dark"] .aboutme-chip {
+  background: #2a2636;
+  border-color: #3f3950;
+  color: #d1c7c0;
+}
+
+[data-theme="dark"] .aboutme-chip.active {
+  background: var(--pink-dark);
+  border-color: var(--pink-dark);
+  color: #fff;
+}
+
+[data-theme="dark"] .aboutme-sortable-item {
+  background: #2a2636;
+  border-color: #3f3950;
+}
+
+[data-theme="dark"] .aboutme-value-text {
+  color: #fff;
+}
+
+[data-theme="dark"] .aboutme-checkbox-item {
+  background: #2a2636;
+  border-color: #3f3950;
+}
+
+[data-theme="dark"] .aboutme-checkbox-item span {
+  color: #fff;
+}
+
+[data-theme="dark"] .aboutme-checkbox-box {
+  background: #2a2636;
+  border-color: #3f3950;
+}
+
+[data-theme="dark"] .aboutme-voice-preview {
+  background: #1e1b29;
+}
+
+[data-theme="dark"] .aboutme-voice-preview-text {
+  color: #f5edd8;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .aboutme-container {
+    padding: 0 16px;
+  }
+  
+  .aboutme-card__header {
+    padding: 16px;
+  }
+  
+  .aboutme-card__content {
+    padding: 0 16px;
+  }
+  
+  .aboutme-card.is-open .aboutme-card__content {
+    padding-bottom: 16px;
+  }
+}

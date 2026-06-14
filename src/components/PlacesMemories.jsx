@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDiaryEntries } from '../hooks/useDiaryEntries';
 import Modal from './Modal';
 import FloatingParticles from './FloatingParticles';
+import MediaPreview from './MediaPreview';
 
 export default function PlacesMemories() {
   const { entries, add, remove } = useDiaryEntries('places');
@@ -22,7 +23,7 @@ export default function PlacesMemories() {
         <div className="detail-view">
           <button className="detail-view__back" onClick={() => setSelected(null)}>← Back to places</button>
           
-          {place.photo && <img src={place.photo} alt={place.title} className="detail-view__photo" />}
+          {place.photo && <MediaPreview src={place.photo} alt={place.title} className="detail-view__photo" />}
           
           <div className="diary-page" style={{ marginBottom: 20 }}>
             <div style={{ position: 'relative', zIndex: 2 }}>
@@ -81,7 +82,7 @@ export default function PlacesMemories() {
               style={{ animationDelay: `${i * 0.08}s` }}
             >
               {place.mood && <span className="entry-card__mood">{place.mood}</span>}
-              {place.photo && <img src={place.photo} alt={place.title} className="entry-card__photo" />}
+              {place.photo && <MediaPreview src={place.photo} alt={place.title} className="entry-card__photo" />}
               <p className="entry-card__date">{place.date ? new Date(place.date).toLocaleDateString() : ''}</p>
               <h3 className="entry-card__title">{place.title}</h3>
               {place.location && <div className="entry-card__tags"><span className="sticker-badge sticker-badge--blue">📍 {place.location}</span></div>}

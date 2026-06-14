@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDiaryEntries } from '../hooks/useDiaryEntries';
 import Modal from './Modal';
 import FloatingParticles from './FloatingParticles';
+import MediaPreview from './MediaPreview';
 
 export default function Relationships() {
   const { entries, add, remove } = useDiaryEntries('relationships');
@@ -22,7 +23,7 @@ export default function Relationships() {
         <div className="detail-view">
           <button className="detail-view__back" onClick={() => setSelected(null)}>← Back</button>
           
-          {rel.photo && <img src={rel.photo} alt={rel.title} className="detail-view__photo" />}
+          {rel.photo && <MediaPreview src={rel.photo} alt={rel.title} className="detail-view__photo" />}
           
           <div className="diary-page" style={{ marginBottom: 20 }}>
             <div style={{ position: 'relative', zIndex: 2 }}>
@@ -79,7 +80,7 @@ export default function Relationships() {
               style={{ animationDelay: `${i * 0.08}s` }}
             >
               {rel.mood && <span className="entry-card__mood">{rel.mood}</span>}
-              {rel.photo && <img src={rel.photo} alt={rel.title} className="entry-card__photo" />}
+              {rel.photo && <MediaPreview src={rel.photo} alt={rel.title} className="entry-card__photo" />}
               <p className="entry-card__date">{rel.date ? new Date(rel.date).toLocaleDateString() : ''}</p>
               <h3 className="entry-card__title">{rel.title}</h3>
               <p className="entry-card__preview">{rel.howWeMet || rel.memories || ''}</p>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDiaryEntries } from '../hooks/useDiaryEntries';
 import Modal from './Modal';
 import FloatingParticles from './FloatingParticles';
+import MediaPreview from './MediaPreview';
 
 export default function ImportantDates() {
   const { entries, add, remove } = useDiaryEntries('dates');
@@ -22,7 +23,7 @@ export default function ImportantDates() {
         <div className="detail-view">
           <button className="detail-view__back" onClick={() => setSelected(null)}>← Back</button>
           
-          {dateEntry.photo && <img src={dateEntry.photo} alt={dateEntry.title} className="detail-view__photo" />}
+          {dateEntry.photo && <MediaPreview src={dateEntry.photo} alt={dateEntry.title} className="detail-view__photo" />}
           
           <div className="diary-page" style={{ marginBottom: 20 }}>
             <div style={{ position: 'relative', zIndex: 2 }}>
@@ -77,7 +78,7 @@ export default function ImportantDates() {
               style={{ animationDelay: `${i * 0.08}s` }}
             >
               {dateEntry.mood && <span className="entry-card__mood">{dateEntry.mood}</span>}
-              {dateEntry.photo && <img src={dateEntry.photo} alt={dateEntry.title} className="entry-card__photo" />}
+              {dateEntry.photo && <MediaPreview src={dateEntry.photo} alt={dateEntry.title} className="entry-card__photo" />}
               <p className="entry-card__date">{dateEntry.date ? new Date(dateEntry.date).toLocaleDateString() : ''}</p>
               <h3 className="entry-card__title">{dateEntry.title}</h3>
               <p className="entry-card__preview">{dateEntry.importance || ''}</p>

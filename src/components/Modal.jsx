@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { fileToDataURL } from '../utils/storage';
+import { fileToDataURL, getProfile } from '../utils/storage';
+import MediaPreview from './MediaPreview';
+import { translateText, isLanguageSupported } from '../services/sarvam';
 
 const MOODS = ['😊', '🥰', '😢', '😤', '🤔', '😴', '🥺', '😎', '🤗', '💪', '🌟', '🎉'];
 
@@ -7,17 +9,42 @@ export default function Modal({ type, onSave, onClose, initial }) {
   const configs = getFormConfig(type);
   const [form, setForm] = useState(initial || getDefaults(type));
   const [photoPreview, setPhotoPreview] = useState(initial?.photo || null);
+  const [translating, setTranslating] = useState(false);
+  const [translationError, setTranslationError] = useState('');
 
   const handleChange = (field, value) => {
     setForm(prev => ({ ...prev, [field]: value }));
   };
 
+  const handleTranslate = async () => {
+    const profile = getProfile();
+    const motherTongue = profile?.identity?.motherTongue;
+    
+    if (!motherTongue || !isLanguageSupported(motherTongue)) {
+      setTranslationError(`Language "${motherTongue || 'Unknown'}" is not supported or missing in About Me.`);
+      return;
+    }
+    
+    if (!form.nativeMemory) return;
+
+    setTranslating(true);
+    setTranslationError('');
+    try {
+      const translated = await translateText(form.nativeMemory, motherTongue);
+      setForm(prev => ({ ...prev, englishTranslation: translated }));
+    } catch (err) {
+      setTranslationError('Translation failed. Please try again.');
+    } finally {
+      setTranslating(false);
+    }
+  };
+
   const handlePhoto = async (e) => {
     const file = e.target.files?.[0];
     if (file) {
-      const dataUrl = await fileToDataURL(file);
+      const dataUrl = URL.createObjectURL(file);
       setPhotoPreview(dataUrl);
-      setForm(prev => ({ ...prev, photo: dataUrl }));
+      setForm(prev => ({ ...prev, photo: dataUrl, rawFile: file }));
     }
   };
 
@@ -43,17 +70,17 @@ export default function Modal({ type, onSave, onClose, initial }) {
           {/* Photo upload */}
           {configs.hasPhoto && (
             <div className="form-group">
-              <label className="form-label">📸 Photo</label>
+              <label className="form-label">📸 Media</label>
               <label className="photo-upload" style={{ maxWidth: 200, margin: '0 auto', display: 'flex' }}>
                 {photoPreview ? (
-                  <img src={photoPreview} alt="Preview" className="photo-upload__preview" />
+                  <MediaPreview src={photoPreview} className="photo-upload__preview" />
                 ) : (
                   <>
                     <span className="photo-upload__icon">📷</span>
-                    <span className="photo-upload__text">Add a photo</span>
+                    <span className="photo-upload__text">Add media</span>
                   </>
                 )}
-                <input type="file" accept="image/*" hidden onChange={handlePhoto} />
+                <input type="file" accept="image/*,video/*,audio/*" hidden onChange={handlePhoto} />
               </label>
             </div>
           )}
@@ -75,13 +102,28 @@ export default function Modal({ type, onSave, onClose, initial }) {
             <div className="form-group" key={field.key}>
               <label className="form-label">{field.label}</label>
               {field.type === 'textarea' ? (
-                <textarea
-                  className="diary-textarea"
-                  rows={field.rows || 3}
-                  value={form[field.key] || ''}
-                  onChange={e => handleChange(field.key, e.target.value)}
-                  placeholder={field.placeholder}
-                />
+                <div style={{ position: 'relative' }}>
+                  <textarea
+                    className="diary-textarea"
+                    rows={field.rows || 3}
+                    value={form[field.key] || ''}
+                    onChange={e => handleChange(field.key, e.target.value)}
+                    placeholder={field.placeholder}
+                  />
+                  {field.key === 'nativeMemory' && type === 'mothertongue' && (
+                    <div style={{ marginTop: 8 }}>
+                      <button 
+                        type="button" 
+                        className="btn btn--secondary btn--small" 
+                        onClick={handleTranslate}
+                        disabled={translating || !form.nativeMemory}
+                      >
+                        {translating ? '⏳ Translating...' : '🔤 Translate to English'}
+                      </button>
+                      {translationError && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: 4 }}>{translationError}</p>}
+                    </div>
+                  )}
+                </div>
               ) : field.type === 'select' ? (
                 <select
                   className="diary-input"
@@ -170,6 +212,10 @@ function getDefaults(type) {
       return { ...base, mood: '🗓️', importance: '', commemorate: '' };
     case 'philosophy':
       return { ...base, mood: '📜', quote: '', situation: '', experience: '', takeaway: '', category: '' };
+    case 'audio':
+      return { ...base, mood: '🎵', description: '', audioType: '', speaker: '', occasion: '', transcript: '', emotions: '', duration: '' };
+    case 'mothertongue':
+      return { ...base, mood: '🌍', nativeMemory: '', englishTranslation: '' };
     default:
       return base;
   }
@@ -293,6 +339,34 @@ function getFormConfig(type) {
           { key: 'takeaway', label: '💡 Takeaway', type: 'textarea', rows: 2, placeholder: 'The main lesson or reflection from this...' },
           { key: 'category', label: '🏷️ Category', type: 'select', placeholder: 'Choose a category',
             options: ['Personal Code', 'Observation', 'Deep Thought', 'Life Principle', 'Inner Peace'] },
+        ]
+      };
+    case 'audio':
+      return {
+        emoji: '🎵', label: 'Audio Memory', subtitle: 'A voice, song or sound worth remembering...',
+        hasPhoto: true, hasMood: true, hasDate: true,
+        titleLabel: '🎵 Audio Title',
+        titlePlaceholder: 'Name this audio memory...',
+        fields: [
+          { key: 'audioType', label: '🎧 Audio Type', type: 'select', placeholder: 'Choose audio type',
+            options: ['Voice Note', 'Music', 'Song', 'Interview', 'Speech', 'Podcast', 'Sound', 'Other'] },
+          { key: 'speaker', label: '🗣️ Speaker / Artist', placeholder: 'Who is speaking or performing?' },
+          { key: 'occasion', label: '🎤 Occasion', placeholder: 'When or why was this recorded?' },
+          { key: 'description', label: '📝 Description', type: 'textarea', rows: 3, placeholder: 'Describe this audio memory...' },
+          { key: 'transcript', label: '📜 Transcript', type: 'textarea', rows: 3, placeholder: 'Optional transcript of the audio...' },
+          { key: 'emotions', label: '💭 Emotions & Feelings', type: 'textarea', rows: 2, placeholder: 'How does this audio make you feel?' },
+          { key: 'duration', label: '⏱️ Duration', placeholder: 'e.g. 2:30, 5 minutes...' },
+        ]
+      };
+    case 'mothertongue':
+      return {
+        emoji: '🌍', label: 'Native Memory', subtitle: 'A story from the heart, in your own words...',
+        hasPhoto: true, hasMood: true, hasDate: true,
+        titleLabel: '✨ Title',
+        titlePlaceholder: 'Name this memory...',
+        fields: [
+          { key: 'nativeMemory', label: '🌐 Memory in Native Language', type: 'textarea', rows: 4, placeholder: 'Write your memory here...' },
+          { key: 'englishTranslation', label: '📝 English Translation', type: 'textarea', rows: 4, placeholder: 'Translation will appear here...' },
         ]
       };
     default:

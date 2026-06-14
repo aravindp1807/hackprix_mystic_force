@@ -13,6 +13,10 @@ import HappyMoments from './components/HappyMoments';
 import BucketList from './components/BucketList';
 import ImportantDates from './components/ImportantDates';
 import Philosophy from './components/Philosophy';
+import MemoryStudio from './components/MemoryStudio';
+import MotherTongueJournal from './components/MotherTongueJournal';
+import SyntheticMindChat from './components/SyntheticMindChat';
+import AboutMe from './components/AboutMe';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('landing');
@@ -40,6 +44,8 @@ export default function App() {
         return <LandingPage onOpen={() => navigate('dashboard')} />;
       case 'dashboard':
         return <Dashboard onNavigate={navigate} searchQuery={searchQuery} onSearchChange={setSearchQuery} />;
+      case 'studio':
+        return <MemoryStudio />;
       case 'friends':
         return <FriendsJournal />;
       case 'places':
@@ -58,6 +64,14 @@ export default function App() {
         return <ImportantDates />;
       case 'philosophy':
         return <Philosophy />;
+      case 'audio':
+        return <AudioMemories />;
+      case 'mothertongue':
+        return <MotherTongueJournal />;
+      case 'syntheticmind':
+        return <SyntheticMindChat />;
+      case 'aboutme':
+        return <AboutMe />;
       default:
         return <Dashboard onNavigate={navigate} searchQuery={searchQuery} onSearchChange={setSearchQuery} />;
     }

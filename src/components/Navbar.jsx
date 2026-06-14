@@ -12,6 +12,9 @@ export default function Navbar({ currentPage, onNavigate, theme, onToggleTheme }
             ←
           </button>
         )}
+        <button className="navbar__action-btn" onClick={() => onNavigate('aboutme')} title="About Me Profile" style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', padding: '4px' }}>
+          🪞
+        </button>
         <button className="navbar__theme-toggle" onClick={onToggleTheme} title="Toggle dark mode">
           {theme === 'dark' ? '☀️' : '🌙'}
         </button>

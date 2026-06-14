@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDiaryEntries } from '../hooks/useDiaryEntries';
 import Modal from './Modal';
 import FloatingParticles from './FloatingParticles';
+import MediaPreview from './MediaPreview';
 
 export default function FriendsJournal() {
   const { entries, add, remove } = useDiaryEntries('friends');
@@ -22,7 +23,7 @@ export default function FriendsJournal() {
         <div className="detail-view">
           <button className="detail-view__back" onClick={() => setSelected(null)}>← Back to friends</button>
           
-          {friend.photo && <img src={friend.photo} alt={friend.title} className="detail-view__photo" />}
+          {friend.photo && <MediaPreview src={friend.photo} alt={friend.title} className="detail-view__photo" />}
           
           <div className="diary-page" style={{ marginBottom: 20 }}>
             <div style={{ position: 'relative', zIndex: 2 }}>
@@ -84,7 +85,7 @@ export default function FriendsJournal() {
               style={{ animationDelay: `${i * 0.08}s` }}
             >
               {friend.mood && <span className="entry-card__mood">{friend.mood}</span>}
-              {friend.photo && <img src={friend.photo} alt={friend.title} className="entry-card__photo" />}
+              {friend.photo && <MediaPreview src={friend.photo} alt={friend.title} className="entry-card__photo" />}
               <p className="entry-card__date">{friend.date ? new Date(friend.date).toLocaleDateString() : ''}</p>
               <h3 className="entry-card__title">{friend.title}</h3>
               {friend.nickname && <p style={{ fontFamily: 'var(--font-handwritten)', color: 'var(--text-light)', fontSize: '0.95rem' }}>"{friend.nickname}"</p>}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDiaryEntries } from '../hooks/useDiaryEntries';
 import Modal from './Modal';
 import FloatingParticles from './FloatingParticles';
+import MediaPreview from './MediaPreview';
 
 export default function HappyMoments() {
   const { entries, add, remove } = useDiaryEntries('happy');
@@ -22,7 +23,7 @@ export default function HappyMoments() {
         <div className="detail-view">
           <button className="detail-view__back" onClick={() => setSelected(null)}>← Back</button>
           
-          {moment.photo && <img src={moment.photo} alt={moment.title} className="detail-view__photo" />}
+          {moment.photo && <MediaPreview src={moment.photo} alt={moment.title} className="detail-view__photo" />}
           
           <div className="diary-page" style={{ marginBottom: 20 }}>
             <div style={{ position: 'relative', zIndex: 2 }}>
@@ -113,7 +114,7 @@ export default function HappyMoments() {
                 style={{ animationDelay: `${i * 0.08}s` }}
               >
                 {moment.mood && <span className="entry-card__mood">{moment.mood}</span>}
-                {moment.photo && <img src={moment.photo} alt={moment.title} className="entry-card__photo" />}
+                {moment.photo && <MediaPreview src={moment.photo} alt={moment.title} className="entry-card__photo" />}
                 <p className="entry-card__date">{moment.date ? new Date(moment.date).toLocaleDateString() : ''}</p>
                 <h3 className="entry-card__title">🏆 {moment.title}</h3>
                 <p className="entry-card__preview">{moment.achievement || moment.proudOf || ''}</p>
